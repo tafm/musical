@@ -2,7 +2,7 @@
   .container
     .row
       .col-lg-12.text-center
-        a(href="http://alphavm.tk:8084/login")
+        a(href="https://musiroots.herokuapp.com/login")
           img(src="@/assets/img/login.png")
 </template>
 
