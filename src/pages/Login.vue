@@ -1,6 +1,9 @@
 <template lang="pug">
-  div
-    a(href="https://musiroots.herokuapp.com/login") Logar com spotfy
+  .container
+    .row
+      .col-lg-12.text-center
+        a(href="http://alphavm.tk:8084/login")
+          img(src="@/assets/img/login.png")
 </template>
 
 <script>
