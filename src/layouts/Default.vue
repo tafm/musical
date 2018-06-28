@@ -5,9 +5,7 @@
       .title
         h5
           | MUSIROOTS
-    .container
-      .content
-        router-view/
+    router-view/
 </template>
 
 <script>
@@ -24,13 +22,14 @@ export default {
   }
   #topmenu {
     img {
-      width: 50px;
+      width: 48px;
       float: left;
       margin-left: 1rem;
     }
     .title {
       color: #FFFFFF;
       padding: 1rem;
+      padding-bottom: 0px;
       float: left;
     }
     height: 60px;

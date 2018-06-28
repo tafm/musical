@@ -5,7 +5,7 @@
       .title
         h5
           | MUSIROOTS
-    .container
+    .container-fluid
       .content
         router-view/
 </template>

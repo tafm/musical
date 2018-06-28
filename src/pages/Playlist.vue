@@ -1,9 +1,9 @@
 <template lang="pug">
-  div
-    .row
-      .col-lg-8
+  .container-fluid.p-0
+    .row.w-100
+      .col-lg-12
         #map
-      .col-lg-4
+      .col-lg-3.list
         .listaartistas
           div
             div(v-for="(artista, key) in artistas")
@@ -80,7 +80,7 @@ export default {
 
 <style lang="stylus" scoped>
   #map {
-    height: 400px;
+    height: calc(100vh - 60px);
   }
   .artista {
     box-sizing: border-box;
@@ -91,7 +91,7 @@ export default {
     background-color: lighten(#333333, 20%)
   }
   .listaartistas {
-    height: 400px;
+    height: calc(100vh - 60px);
     overflow-y : scroll;
     box-sizing: border-box;
     color: #FFFFFF;
@@ -101,5 +101,17 @@ export default {
         margin-right: 1rem;
       }
     }
+  }
+  .list{
+    position: absolute;
+    right: 0;
+    z-index: 9999;
+    padding: 0px;
+  }
+  .p-0{
+    padding: 0px;
+  }
+  .w-100{
+    width: 100%;
   }
 </style>

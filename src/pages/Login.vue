@@ -17,4 +17,13 @@ export default {
 
 <style lang="stylus">
 
+.text-center{
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+    a{
+      align-self: center;
+    }
+}
+
 </style>

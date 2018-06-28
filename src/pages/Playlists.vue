@@ -1,14 +1,15 @@
 <template lang="pug">
-  div
-    h2 Selecionar playlist
-    .row
-      .col-lg-4.col-md-6(v-for="playlist in playlists")
-        .playlist.mt-3(v-on:click="showPlaylist(playlist.id)")
-          img(v-bind:src="playlist.image", v-bind:alt="playlist.name")
-          .desc
-            span Nome: {{ playlist.name }}
-            br
-            span Faixas: {{ playlist.tracks }}
+  .container
+    .content
+      h2 Selecionar playlist
+      .row
+        .col-lg-4.col-md-6(v-for="playlist in playlists")
+          .playlist.mt-3(v-on:click="showPlaylist(playlist.id)")
+            img(v-bind:src="playlist.image", v-bind:alt="playlist.name")
+            .desc
+              span Nome: {{ playlist.name }}
+              br
+              span Faixas: {{ playlist.tracks }}
 
 </template>
 
