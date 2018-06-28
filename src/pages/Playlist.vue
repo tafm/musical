@@ -55,22 +55,34 @@ export default {
   },
   methods: {
     marcacoes () {
-      var self = this
+      // var self = this
+      var countryes = {}
       for (var a in this.artistas) {
         var { country } = this.artistas[a]
         if (country) {
-          var { LAT, LONG } = this.getCentroids[country]
-          var m = L.marker([LAT, LONG]).addTo(this.mymap)
-          m.on('mouseover', ((n) => {
-            return () => {
-              self.artistas[n].hover = true
-            }
-          })(a))
-          m.on('mouseout', ((n) => {
-            return () => {
-              self.artistas[n].hover = false
-            }
-          })(a))
+          if (!countryes[country]) {
+            countryes[country] = true
+            var { LAT, LONG } = this.getCentroids[country]
+            var m = L.marker([LAT, LONG]).addTo(this.mymap)
+            m.on('mouseover', ((n) => {
+              return () => {
+                for (var b in this.artistas) {
+                  if (this.artistas[b].country === n) {
+                    this.artistas[b].hover = true
+                  }
+                }
+              }
+            })(country))
+            m.on('mouseout', ((n) => {
+              return () => {
+                for (var b in this.artistas) {
+                  if (this.artistas[b].country === n) {
+                    this.artistas[b].hover = false
+                  }
+                }
+              }
+            })(country))
+          }
         }
       }
     }
