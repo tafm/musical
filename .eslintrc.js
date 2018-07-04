@@ -28,6 +28,7 @@ module.exports = {
   },
   globals: {
     '$': true,
-    'L': true
+    'L': true,
+    'd3': true
   }
 }

@@ -8,7 +8,11 @@ import { mapActions } from 'vuex'
 export default {
   name: 'pageAuth',
   async beforeMount () {
-    var token = this.$route.params.token
+    var token = {
+      value: this.$route.params.token,
+      expires: this.$route.params.expires,
+      refresh: this.$route.params.refresh
+    }
     try {
       await this.armazenaToken(token)
       this.$router.push('/playlists')

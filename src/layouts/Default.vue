@@ -5,6 +5,15 @@
       .title
         h5
           | MUSIROOTS
+      nav.navbar.navbar-expand-lg.navbar-light
+        //- a.navbar-brand(href="#") Navbar
+        button.navbar-toggler(type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation")
+          span.navbar-toggler-icon
+        #navbarNavAltMarkup.collapse.navbar-collapse
+          .navbar-nav
+            router-link.a.nav-item.nav-link(to="/playlists") Playlists
+            router-link.a.nav-item.nav-link(to="/grafico") Gráfico
+            router-link.a.nav-item.nav-link(to="/estatisticas") Estatísticas
     router-view/
 </template>
 
@@ -31,6 +40,14 @@ export default {
       padding: 1rem;
       padding-bottom: 0px;
       float: left;
+    }
+    .navbar-nav {
+      a {
+        color: #FFFFFF;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
     }
     height: 60px;
     background-color: #c0392b;

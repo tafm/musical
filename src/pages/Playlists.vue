@@ -14,6 +14,8 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
+
 export default {
   name: 'PagePlaylists',
   data () {
@@ -26,18 +28,29 @@ export default {
       ]
     }
   },
-  async beforeMount () {
-    try {
-      const {data: playlists} = await this.$axios.get('playlists')
-      this.playlists = playlists
-    } catch (e) {
+  beforeMount () {
+    this.checaCache().then(() => {
+      this.playlists = this.getPlaylists
+    })
+    // try {
+    //   const {data: playlists} = await this.$axios.get('playlists')
+    //   this.playlists = playlists
+    // } catch (e) {
 
-    }
+    // }
+  },
+  computed: {
+    ...mapGetters([
+      'getPlaylists'
+    ])
   },
   methods: {
     showPlaylist (id) {
       this.$router.push(`/playlist/${id}`)
-    }
+    },
+    ...mapActions([
+      'checaCache'
+    ])
   }
 }
 </script>

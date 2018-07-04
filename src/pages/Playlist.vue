@@ -9,11 +9,11 @@
             div(v-for="(artista, key) in artistas")
               .artista(v-bind:class="{active: artista.hover}")
                 span.flag-icon(v-bind:class="['flag-icon-' + artista.country.toLowerCase()]") {{ artista.country ? '' : '?' }}
-                span(v-bind:style="{'text-decoration': artista.country ? 'none' : 'line-through'}") {{ key }}
+                span(v-bind:style="{'text-decoration': artista.country ? 'none' : 'line-through'}") {{ key }} {{ artista.year ? `(${artista.year.split('-')[0]})` : '' }}
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'pagePlaylist',
@@ -23,17 +23,20 @@ export default {
       map: null
     }
   },
-  async beforeMount () {
-    try {
-      var {data: artistas} = await this.$axios.get(`artists/${this.$route.params.iduser}/${this.$route.params.idplaylist}`)
+  beforeMount () {
+    // try {
+    // var {data: artistas} = await this.$axios.get(`artists/${this.$route.params.iduser}/${this.$route.params.idplaylist}`)
+    this.checaCache().then(() => {
+      let artistas = this.getArtistas[`${this.$route.params.iduser}/${this.$route.params.idplaylist}`]
       for (var a in artistas) {
         artistas[a].hover = false
       }
       this.artistas = artistas
       this.marcacoes()
-    } catch (e) {
-      console.log(e)
-    }
+    })
+    // } catch (e) {
+    //   console.log(e)
+    // }
   },
   mounted () {
     var self = this
@@ -50,7 +53,8 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'getCentroids'
+      'getCentroids',
+      'getArtistas'
     ])
   },
   methods: {
@@ -85,7 +89,10 @@ export default {
           }
         }
       }
-    }
+    },
+    ...mapActions([
+      'checaCache'
+    ])
   }
 }
 </script>

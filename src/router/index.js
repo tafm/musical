@@ -7,7 +7,7 @@ Vue.use(Router)
 var router = new Router({
   routes: [
     {
-      path: '/auth/:token',
+      path: '/auth/:token/:expires/:refresh',
       name: 'Auth',
       component: () => import('@/pages/Auth')
     },
@@ -36,6 +36,22 @@ var router = new Router({
           path: 'playlist/:iduser/:idplaylist',
           name: 'Playlist',
           component: () => import('@/pages/Playlist'),
+          meta: {
+            protected: true
+          }
+        },
+        {
+          path: 'grafico',
+          name: 'Grafico',
+          component: () => import('@/pages/Grafico'),
+          meta: {
+            protected: true
+          }
+        },
+        {
+          path: 'estatisticas',
+          name: 'Estatisticas',
+          component: () => import('@/pages/Estatisticas'),
           meta: {
             protected: true
           }

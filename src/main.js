@@ -11,12 +11,22 @@ Vue.prototype.$axios = axios
 axios.defaults.baseURL = 'https://musiroots.herokuapp.com'
 
 axios.interceptors.request.use(function (request) { // interceptor para inserir token nas requisições
-  var token = store.getters['getToken']
+  var token = store.getters['getToken'].value
   if (token) {
     request.headers.access_token = token
   }
   return request
 }, function (error) {
+  return Promise.reject(error)
+})
+
+axios.interceptors.response.use(null, (error) => {
+  if (error.config && error.response && error.response.status === 401) {
+    return store.dispatch('updateToken').then((token) => {
+      error.config.headers.access_token = token.value
+      return axios.request(error.config)
+    })
+  }
   return Promise.reject(error)
 })
 
