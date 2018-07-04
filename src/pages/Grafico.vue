@@ -100,6 +100,10 @@ export default {
 
       // adiciona barras
 
+      var cores = d3.scaleOrdinal()
+        .domain(dados.map(function (d) { return d.pais }))
+        .range(['#e9724d', '#d6d727', '#92cad1', '#79ccb3', '#868686'])
+
       grafico.append('g')
         .selectAll('rect')
         .data(dados)
@@ -109,7 +113,7 @@ export default {
         .attr('y', function (dados, index) { return y(dados.pais) })
         .attr('width', function (dados) { return x(dados.artistas) })
         .attr('height', y.bandwidth())
-        .attr('fill', '#ffdfaf')
+        .attr('fill', (dados) => { return cores(dados.pais) })
         .attr('stroke', 'black')
     },
     ...mapActions([
