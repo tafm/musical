@@ -24,32 +24,33 @@ export default {
     }
   },
   beforeMount () {
-    // try {
-    // var {data: artistas} = await this.$axios.get(`artists/${this.$route.params.iduser}/${this.$route.params.idplaylist}`)
-    this.checaCache().then(() => {
-      let artistas = this.getArtistas[`${this.$route.params.iduser}/${this.$route.params.idplaylist}`]
-      for (var a in artistas) {
-        artistas[a].hover = false
-      }
-      this.artistas = artistas
-      this.marcacoes()
-    })
-    // } catch (e) {
-    //   console.log(e)
-    // }
   },
   mounted () {
-    var self = this
-    this.mymap = L.map('map').setView([51.505, -0.09], 2)
-    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-      maxZoom: 18,
-      id: 'mapbox.streets',
-      accessToken: 'pk.eyJ1IjoibW9hYmUxMjQiLCJhIjoiY2poc2l6bGo2MDNmaTNrcnYzajZ1eWhjeCJ9.j8grDdlxIHuUggvcLKpTBw'
-    }).addTo(self.mymap)
-    // var marker = L.marker([51.5, -0.09]).addTo(self.mymap)
-    // var artistas = { 'Young Thug': { 'name': 'Young Thug', 'country': 'FR', 'area': 'France', 'year': '1987-12-24', 'type': 'Person' }, 'Camila Cabello': { 'name': 'Camila Cabello', 'country': 'US', 'area': 'United States', 'year': '1997-03-03', 'type': 'Person' }, 'Biltre': { 'name': '', 'country': '', 'area': '', 'year': '', 'type': '' } }
-    this.marcacoes()
+    this.checaCache().then(() => {
+      let artistas = this.getArtistas[`${this.$route.params.iduser}/${this.$route.params.idplaylist}`]
+      let artistasdata = {}
+      for (let a in artistas) {
+        artistasdata[a] = {}
+        for (let p in artistas[a]) {
+          artistasdata[a][p] = artistas[a][p]
+        }
+      }
+      for (var a in artistasdata) {
+        artistasdata[a].hover = false
+      }
+      this.artistas = artistasdata
+
+      var self = this
+      this.mymap = L.map('map').setView([51.505, -0.09], 2)
+      L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        id: 'mapbox.streets',
+        accessToken: 'pk.eyJ1IjoibW9hYmUxMjQiLCJhIjoiY2poc2l6bGo2MDNmaTNrcnYzajZ1eWhjeCJ9.j8grDdlxIHuUggvcLKpTBw'
+      }).addTo(self.mymap)
+
+      this.marcacoes()
+    })
   },
   computed: {
     ...mapGetters([
