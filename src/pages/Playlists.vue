@@ -2,6 +2,7 @@
   .container
     .content
       h2 Selecionar playlist
+      div(v-show="carregando") Carregando dados...
       .row
         .col-lg-4.col-md-6(v-for="playlist in playlists")
           .playlist.mt-3(v-on:click="showPlaylist(playlist.id)")
@@ -20,6 +21,7 @@ export default {
   name: 'PagePlaylists',
   data () {
     return {
+      carregando: false,
       playlists: [
         // { 'id': '21vfefwtw6pov4eceihz73f4a/0GxXJUcTPmvW9qwyoINRQA', 'name': 'fun', 'image': 'https://i.scdn.co/image/b9af9f6ffc29faee869aec9af7fcd72221fe4ee4', 'tracks': 2, 'link': 'https://open.spotify.com/user/21vfefwtw6pov4eceihz73f4a/playlist/0GxXJUcTPmvW9qwyoINRQA' },
         // { 'id': '21vfefwtw6pov4eceihz73f4a/0GxXJUcTPmvW9qwyoINRQA', 'name': 'fun', 'image': 'https://i.scdn.co/image/b9af9f6ffc29faee869aec9af7fcd72221fe4ee4', 'tracks': 2, 'link': 'https://open.spotify.com/user/21vfefwtw6pov4eceihz73f4a/playlist/0GxXJUcTPmvW9qwyoINRQA' },
@@ -29,7 +31,9 @@ export default {
     }
   },
   beforeMount () {
+    this.carregando = true
     this.checaCache().then(() => {
+      this.carregando = false
       this.playlists = this.getPlaylists
     })
     // try {

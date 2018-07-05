@@ -2,31 +2,33 @@
   .container
     .content
       h2 Estatísticas
-      .row
-        .col-lg-3.col-6
-          | Artistas/bandas diferentes:&nbsp;
-        .col-lg-2.col-6
-          span.valor {{ dados.qtdArtistas }}
-      .row
-        .col-lg-3.col-6
-          | Países diferentes de origem:&nbsp;
-        .col-lg-2.col-6
-          span.valor {{ dados.qtdPaises }}
-      .row
-        .col-lg-3.col-6
-          | Bandas/grupos:&nbsp;
-        .col-lg-2.col-6
-          span.valor {{ dados.qtdBandas }}
-      .row
-        .col-lg-3.col-6
-          | Artistas/solo:&nbsp;
-        .col-lg-2.col-6
-          span.valor {{ dados.qtdPessoas }}
-      .row
-        .col-lg-3.col-6
-          | Artista em mais playlists:&nbsp;
-        .col-lg-2.col-6
-          span.valor {{ dados.maisFrequente.nome }} ({{ dados.maisFrequente.qtd }})
+      div(v-show="carregando") Carregando dados...
+      div(v-show="!carregando")
+        .row
+          .col-lg-3.col-6
+            | Artistas/bandas diferentes:&nbsp;
+          .col-lg-2.col-6
+            span.valor {{ dados.qtdArtistas }}
+        .row
+          .col-lg-3.col-6
+            | Países diferentes de origem:&nbsp;
+          .col-lg-2.col-6
+            span.valor {{ dados.qtdPaises }}
+        .row
+          .col-lg-3.col-6
+            | Bandas/grupos:&nbsp;
+          .col-lg-2.col-6
+            span.valor {{ dados.qtdBandas }}
+        .row
+          .col-lg-3.col-6
+            | Artistas/solo:&nbsp;
+          .col-lg-2.col-6
+            span.valor {{ dados.qtdPessoas }}
+        .row
+          .col-lg-3.col-6
+            | Artista em mais playlists:&nbsp;
+          .col-lg-2.col-6
+            span.valor {{ dados.maisFrequente.nome }} ({{ dados.maisFrequente.qtd }})
 
 </template>
 
@@ -35,8 +37,16 @@ import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'pageEstatisticas',
+  data () {
+    return {
+      carregando: false
+    }
+  },
   beforeMount () {
-    this.checaCache().then(() => {})
+    this.carregando = true
+    this.checaCache().then(() => {
+      this.carregando = false
+    })
   },
   computed: {
     dados () {
