@@ -44,7 +44,9 @@ export default {
   },
   beforeMount () {
     this.carregando = true
+    this.$vs.loading()
     this.checaCache().then(() => {
+      this.$vs.loading.close()
       this.carregando = false
     })
   },

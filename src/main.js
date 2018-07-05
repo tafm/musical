@@ -5,6 +5,10 @@ import App from './App'
 import router from './router'
 import store from './store'
 import axios from 'axios'
+import Vuesax from 'vuesax'
+import 'vuesax/dist/vuesax.css'
+
+Vue.use(Vuesax)
 
 Vue.prototype.$axios = axios
 

@@ -20,7 +20,9 @@ export default {
   },
   mounted () {
     this.carregando = true
+    this.$vs.loading()
     this.checaCache().then(() => {
+      this.$vs.loading.close()
       this.carregando = false
       let artistas = {}
       for (let p in this.getArtistas) {
