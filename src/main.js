@@ -31,6 +31,13 @@ axios.interceptors.response.use(null, (error) => {
       return axios.request(error.config)
     })
   }
+  if (error.config && error.response && error.response.status === 429) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        axios.request(error.config).then((v) => { resolve(v) }).catch((e) => { reject(e) })
+      }, 2000)
+    })
+  }
   return Promise.reject(error)
 })
 

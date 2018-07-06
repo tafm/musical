@@ -3,11 +3,32 @@
     #map
     .list
       .listaartistas
-        div
-          div(v-for="(artista, key) in artistasFiltrados")
-            .artista
-              span.flag-icon(v-bind:class="['flag-icon-' + artista.country.toLowerCase()]") {{ artista.country ? '' : '?' }}
-              span(v-bind:style="{'text-decoration': artista.country ? 'none' : 'line-through'}") {{ key }} {{ artista.year ? `(${artista.year.split('-')[0]})` : '' }}
+        div(v-if="artistaSelecionado == null")
+          div
+            .pais(v-if="Object.keys(artistasFiltrados).length > 0")
+              span.flag-icon(v-bind:class="'flag-icon-' + artistasFiltrados[Object.keys(artistasFiltrados)[0]].country.toLowerCase()")
+              span {{ getNameCountries[artistasFiltrados[Object.keys(artistasFiltrados)[0]].country] }} ({{ Object.keys(artistasFiltrados).length }})
+          div(v-for="(artista, key) in artistasFiltrados" v-on:click="artistaSelecionado = artista")
+            //- atualmente este bind nem é realmente necessário, pois só mostra na lista artistas que tem informações de país
+            .artista(v-bind:class="{temartista: artista.name}")
+              // span.flag-icon(v-bind:class="['flag-icon-' + artista.country.toLowerCase()]") {{ artista.country ? '' : '?' }}
+              span(v-bind:style="{'text-decoration': artista.country ? 'none' : 'line-through'}") {{ key }}
+        div.artistaBox(v-else)
+          button.btn.btn-dark.form-control(v-on:click="artistaSelecionado = null")
+            i.fa.fa-arrow-left(style="margin-right: 0.5rem;")
+            | Voltar
+          #artistaImagem
+            // img(src="~@/assets/img/unknown_dp.png")
+            img(v-bind:src="artistaSelecionado.images.length > 0 ? artistaSelecionado.images[0].url : 'static/img/unknown_dp.png'")
+          #artistaNome
+            | {{ artistaSelecionado.name }}
+          #artistaInfo
+            .info(v-if="artistaSelecionado.country")
+              span.tipo País de origem:
+              span.valor &nbsp; {{ getNameCountries[artistasFiltrados[Object.keys(artistasFiltrados)[0]].country] }}
+            .info(v-if="artistaSelecionado.year")
+              span.tipo Ano de {{ artistaSelecionado.type == 'Person' ? 'Nascimento:' : 'Fundação:' }}
+              span.valor &nbsp; {{ artistaSelecionado.year.split('-')[0] }}
 </template>
 
 <script>
@@ -19,7 +40,8 @@ export default {
     return {
       artistas: {},
       artistasFiltrados: {},
-      map: null
+      map: null,
+      artistaSelecionado: null
     }
   },
   beforeMount () {
@@ -50,7 +72,7 @@ export default {
       this.artistas = artistasdata
 
       var self = this
-      this.mymap = L.map('map', { zoomControl: false, maxZoom: 2 }).setView([51.505, -0.09], 2)
+      this.mymap = L.map('map', { zoomControl: false, minZoom: 2, maxZoom: 2 }).setView([51.505, -0.09], 2)
       L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
         maxZoom: 18,
@@ -97,6 +119,7 @@ export default {
       L.geoJSON(this.getGeoCountries, {
         onEachFeature: function (feature, layer) {
           layer.on('click', function (e) {
+            self.artistaSelecionado = null
             // if (feature.id === '---') { // clicou no oceano
             //   console.log('ocean')
             // } else {
@@ -147,6 +170,7 @@ export default {
       'getCentroids',
       'getGeoCountries',
       'getCodeCountries',
+      'getNameCountries',
       'getArtistas'
     ])
   },
@@ -167,6 +191,19 @@ export default {
     padding: 1rem 1rem;
     border-bottom: 1px solid lighten(#333333, 20%);
   }
+  .temartista:hover {
+    background-color: lighten(#333333, 20%);
+    cursor: pointer;
+  }
+  .pais {
+    box-sizing: border-box;
+    font-size: 1.6rem;
+    padding: 1rem 1rem;
+    border-bottom: 1px solid lighten(#333333, 20%);
+    .flag-icon {
+      margin-right: 1rem;
+    }
+  }
   .active {
     background-color: lighten(#333333, 20%)
   }
@@ -179,6 +216,30 @@ export default {
     .artista {
       .flag-icon {
         margin-right: 1rem;
+      }
+    }
+    .artistaBox {
+      margin: 1rem;
+      #artistaImagem {
+        margin-top: 1rem;
+        img {
+          box-sizing: border-box;
+          width: 135px;
+          border: 1px solid lighten(#000000, 10%);
+          padding: 0.2rem;
+          background-color: lighten(#333333, 30%);
+        }
+      }
+      #artistaNome {
+        font-size: 2rem;
+        font-family: arial;
+        border-bottom: 1px solid lighten(#333333, 10%);
+      }
+      #artistaInfo {
+        margin-top: 0.5rem;
+        .info {
+          float: left;
+        }
       }
     }
   }

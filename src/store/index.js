@@ -3,6 +3,7 @@ import centroids from './centroids.json'
 import geocountries from './countries.geo.json'
 import codecountries from './countries.codes.json'
 import ocean from './oceans.json' // polígonos representando o oceano, para simular eventos de 'clickOut'
+import names from './countries.names.json' // json com nomes em português dos países
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
@@ -19,6 +20,7 @@ export default new Vuex.Store({
     'centroids': centroids.reduce((P, a, index, array) => { P[a.ISO3136] = a; return P }, {}),
     'geocountries': geocountries,
     'codecountries': codecountries.reduce((ac, a) => { ac[a['alpha-3']] = a['alpha-2']; return ac }, {}),
+    'namecountries': names.reduce((ac, a) => { ac[a.sigla] = a.nome_pais; return ac }, {}),
     playlists: null,
     artistas: null,
     datacache: null
@@ -47,6 +49,9 @@ export default new Vuex.Store({
     },
     getCodeCountries (state) {
       return state.codecountries
+    },
+    getNameCountries (state) {
+      return state.namecountries
     },
     getPlaylists (state) {
       return state.playlists
