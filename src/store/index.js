@@ -1,8 +1,15 @@
 import localforage from 'localforage'
 import centroids from './centroids.json'
+import geocountries from './countries.geo.json'
+import codecountries from './countries.codes.json'
+import ocean from './oceans.json' // polígonos representando o oceano, para simular eventos de 'clickOut'
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+
+let oceanFeature = ocean.features[0]
+oceanFeature.id = '---'
+geocountries.features.push(oceanFeature)
 
 Vue.use(Vuex)
 
@@ -10,6 +17,8 @@ export default new Vuex.Store({
   state: {
     token: null, // {value, refresh, expires}
     'centroids': centroids.reduce((P, a, index, array) => { P[a.ISO3136] = a; return P }, {}),
+    'geocountries': geocountries,
+    'codecountries': codecountries.reduce((ac, a) => { ac[a['alpha-3']] = a['alpha-2']; return ac }, {}),
     playlists: null,
     artistas: null,
     datacache: null
@@ -32,6 +41,12 @@ export default new Vuex.Store({
     },
     getCentroids (state) {
       return state.centroids
+    },
+    getGeoCountries (state) { // retorna o polígono de cada país
+      return state.geocountries
+    },
+    getCodeCountries (state) {
+      return state.codecountries
     },
     getPlaylists (state) {
       return state.playlists

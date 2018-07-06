@@ -4,7 +4,7 @@
       img(src="@/assets/img/logotop.png", alt="", srcset="")
       .title
         h5
-          | MUSIROOTS
+          router-link(to="/playlist/all") MUSIROOTS
       nav.navbar.navbar-expand-lg.navbar-light
         //- a.navbar-brand(href="#") Navbar
         button.navbar-toggler(type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation")
@@ -40,6 +40,9 @@ export default {
       padding: 1rem;
       padding-bottom: 0px;
       float: left;
+      a {
+        color: #FFFFFF;
+      }
     }
     .navbar-nav {
       a {

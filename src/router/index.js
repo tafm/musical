@@ -41,6 +41,14 @@ var router = new Router({
           }
         },
         {
+          path: 'playlist/all',
+          name: 'AllPlaylists',
+          component: () => import('@/pages/Playlist'),
+          meta: {
+            protected: true
+          }
+        },
+        {
           path: 'grafico',
           name: 'Grafico',
           component: () => import('@/pages/Grafico'),

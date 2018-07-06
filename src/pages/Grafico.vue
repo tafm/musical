@@ -104,7 +104,8 @@ export default {
 
       var cores = d3.scaleOrdinal()
         .domain(dados.map(function (d) { return d.pais }))
-        .range(['#e9724d', '#d6d727', '#92cad1', '#79ccb3', '#868686'])
+        .range(d3.schemeCategory10)
+        // .range(['#e9724d', '#d6d727', '#92cad1', '#79ccb3', '#868686'])
 
       grafico.append('g')
         .selectAll('rect')

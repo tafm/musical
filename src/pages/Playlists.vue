@@ -54,6 +54,9 @@ export default {
     showPlaylist (id) {
       this.$router.push(`/playlist/${id}`)
     },
+    all () {
+
+    },
     ...mapActions([
       'checaCache'
     ])
