@@ -28,11 +28,11 @@ export default {
       for (let p in this.getArtistas) {
         for (let a in this.getArtistas[p]) {
           let artista = this.getArtistas[p][a]
-          if (artista.area) {
-            if (artistas[artista.area]) {
-              artistas[artista.area]++
+          if (artista.country) {
+            if (artistas[artista.country]) {
+              artistas[artista.country]++
             } else {
-              artistas[artista.area] = 1
+              artistas[artista.country] = 1
             }
           }
         }
@@ -49,7 +49,8 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'getArtistas'
+      'getArtistas',
+      'getNameCountries'
     ])
   },
   methods: {
@@ -92,13 +93,18 @@ export default {
 
       // adiciona o eixo Y
 
+      let self = this
+
       let y = d3.scaleBand()
         .rangeRound([heightgrafico, 0])
         .domain(dados.map(function (d) { return d.pais }))
         .paddingInner(0.20)
 
+      let axisL = d3.axisLeft(y)
+        .tickFormat((n) => { return self.getNameCountries[n] })
+
       grafico.append('g')
-        .call(d3.axisLeft(y))
+        .call(axisL)
 
       // adiciona barras
 
