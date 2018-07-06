@@ -20,6 +20,11 @@
           #artistaImagem
             // img(src="~@/assets/img/unknown_dp.png")
             img(v-bind:src="artistaSelecionado.images.length > 0 ? artistaSelecionado.images[0].url : 'static/img/unknown_dp.png'")
+            .spotify
+              a(v-bind:href="artistaSelecionado.spotify_link" target="_blank")
+                img(src="static/img/spotify_w.png")
+                br
+                | ouvir no spotify
           #artistaNome
             | {{ artistaSelecionado.name }}
           #artistaInfo
@@ -27,7 +32,7 @@
               span.tipo País de origem:
               span.valor &nbsp; {{ getNameCountries[artistasFiltrados[Object.keys(artistasFiltrados)[0]].country] }}
             .info(v-if="artistaSelecionado.year")
-              span.tipo Ano de {{ artistaSelecionado.type == 'Person' ? 'Nascimento:' : 'Fundação:' }}
+              span.tipo Ano de {{ artistaSelecionado.type == 'Person' ? 'nascimento:' : 'fundação:' }}
               span.valor &nbsp; {{ artistaSelecionado.year.split('-')[0] }}
 </template>
 
@@ -237,21 +242,44 @@ export default {
     .artistaBox {
       margin: 1rem;
       #artistaImagem {
+        display: table;
         margin-top: 1rem;
-        img {
+        > img {
+          float: left;
           box-sizing: border-box;
           width: 135px;
           border: 1px solid lighten(#000000, 10%);
           padding: 0.2rem;
           background-color: lighten(#333333, 30%);
         }
+        .spotify {
+          margin-top: 2rem;
+          margin-left: 1rem;
+          float: left;
+          text-align: center;
+          font-size: 0.8rem;
+          img {
+            width: 40px;
+          }
+          a {
+            opacity: 0.5;
+            color: #FFFFFF;
+            text-decoration: none;
+          }
+          a:hover {
+            opacity: 1;
+          }
+        }
       }
       #artistaNome {
+        width: 100%;
+        float: left;
         font-size: 2rem;
         font-family: arial;
         border-bottom: 1px solid lighten(#333333, 10%);
       }
       #artistaInfo {
+        float: left;
         margin-top: 0.5rem;
         .info {
           float: left;

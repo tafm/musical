@@ -8,9 +8,9 @@
           .playlist.mt-3(v-on:click="showPlaylist(playlist.id)")
             img(v-bind:src="playlist.image", v-bind:alt="playlist.name")
             .desc
-              span Nome: {{ playlist.name }}
+              span.nomeplaylist {{ playlist.name }}
               br
-              span Faixas: {{ playlist.tracks }}
+              span {{ playlist.tracks }} faixas
 
 </template>
 
@@ -70,9 +70,15 @@ export default {
     background-color: #FFFFFF;
     border: 2px solid lighten(#2c3e50, 80%);
     .desc {
+      box-sizing: border-box;
+      padding-left: 0.5rem;
       float: left;
       width: 75%;
       font: arial;
+      font-size: 0.8rem;
+      .nomeplaylist {
+        font-size: 1.4rem;
+      }
     }
     img {
       float: left;
