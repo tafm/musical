@@ -114,7 +114,7 @@ export default {
 
       let cores = d3.scaleLinear().domain([0, maxArtistas])
         .interpolate(d3.interpolateHcl)
-        .range([d3.rgb('#FFFFFF'), d3.rgb('#ff6523')])
+        .range([d3.rgb('#ffe7da'), d3.rgb('#ff6523')])
 
       L.geoJSON(this.getGeoCountries, {
         onEachFeature: function (feature, layer) {
@@ -153,7 +153,7 @@ export default {
         style: function (feature) {
           let paisalpha2 = self.getCodeCountries[feature.id]
           let qtdartistas = artistasPaises[paisalpha2]
-          let cor = cores(qtdartistas)
+          let cor = qtdartistas === 0 ? '#FFFFFF' : cores(qtdartistas)
           return {
             fillColor: feature.id === '---' ? '#ddd' : cor, // Default color of countries.
             fillOpacity: 1,
