@@ -63,6 +63,14 @@ var router = new Router({
           meta: {
             protected: true
           }
+        },
+        {
+          path: 'generos',
+          name: 'Generos',
+          component: () => import('@/pages/Generos'),
+          meta: {
+            protected: true
+          }
         }
       ]
     },

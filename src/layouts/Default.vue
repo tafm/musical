@@ -14,6 +14,7 @@
             router-link.a.nav-item.nav-link(to="/playlists") Playlists
             router-link.a.nav-item.nav-link(to="/grafico") Gráfico
             router-link.a.nav-item.nav-link(to="/estatisticas") Estatísticas
+            router-link.a.nav-item.nav-link(to="/generos") Gêneros por país
     router-view/
 </template>
 

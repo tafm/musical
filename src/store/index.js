@@ -23,6 +23,7 @@ export default new Vuex.Store({
     'namecountries': names.reduce((ac, a) => { ac[a.sigla] = a.nome_pais; return ac }, {}),
     playlists: null,
     artistas: null,
+    generos: null,
     datacache: null
   },
   mutations: {
@@ -35,6 +36,9 @@ export default new Vuex.Store({
     setArtistas (state, artistas) {
       state.artistas = artistas
       state.datacache = new Date()
+    },
+    setGeneros (state, generos) {
+      state.generos = generos
     }
   },
   getters: {
@@ -58,6 +62,9 @@ export default new Vuex.Store({
     },
     getArtistas (state) {
       return state.artistas
+    },
+    getGeneros (state) {
+      return state.generos
     }
   },
   actions: {
@@ -98,8 +105,10 @@ export default new Vuex.Store({
                 const {data: playlist} = await axios.get(`artists/${playlists[i].id}`)
                 artistas[playlists[i].id] = playlist
               }
+              const {data: generos} = await axios.get('genres')
               context.commit('setPlaylists', playlists)
               context.commit('setArtistas', artistas)
+              context.commit('setGeneros', generos)
               resolve()
             } catch (e) {
               reject(e)
