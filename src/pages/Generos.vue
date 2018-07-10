@@ -3,7 +3,7 @@
     #map
     #selecaoGeneros
       #accordion
-        .card(v-for="l in ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']")
+        .card(v-for="l in ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']")
           .card-header
             button.btn.btn-link(data-toggle="collapse" v-bind:data-target="'#collapse' + l" aria-expanded="true" v-bind:aria-controls="'collapse' + l")
               | {{ l }}
